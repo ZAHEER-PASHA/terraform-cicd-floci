@@ -35,3 +35,9 @@ resource "aws_s3_bucket" "cicd" {
     Branch      = "feature"
   }
 }
+resource "aws_s3_object" "website" {
+  bucket       = aws_s3_bucket.cicd.id
+  key          = "index.html"
+  source       = "index.html"
+  content_type = "text/html"
+}
