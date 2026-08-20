@@ -32,6 +32,6 @@ resource "aws_s3_bucket" "cicd" {
     ManagedBy   = "Terraform"
     Environment = "Dev"
     Practice    = "GitHubWebhook"
-    Branch      = "feature"
+    Branch      = "feature-test"
   }
 }
