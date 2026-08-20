@@ -32,12 +32,18 @@ pipeline {
         }
 
         stage('Approval') {
+            when {
+                branch 'main'
+            }
             steps {
                 input message: 'Do you want to apply Terraform changes?', ok: 'Apply'
             }
         }
 
         stage('Terraform Apply') {
+            when {
+                branch 'main'
+            }
             steps {
                 bat 'terraform apply tfplan'
             }
