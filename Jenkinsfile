@@ -23,7 +23,12 @@ pipeline {
 
         stage('Terraform Plan') {
             steps {
-                bat 'terraform plan'
+                bat 'terraform plan -out=tfplan'
+            }
+        }
+        stage('Archive Terraform Plan') {
+            steps {
+                archiveArtifacts artifacts: 'tfplan', fingerprint: true
             }
         }
 
@@ -35,7 +40,7 @@ pipeline {
 
         stage('Terraform Apply') {
             steps {
-                bat 'terraform apply -auto-approve'
+                bat 'terraform apply tfplan'
             }
         }
     }
