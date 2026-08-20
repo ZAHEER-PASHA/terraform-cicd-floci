@@ -20,12 +20,6 @@ pipeline {
                 bat 'terraform validate'
             }
         }
-        stage('Test Failure') {
-            steps {
-                bat 'this-command-does-not-exist'
-            }
-        }
-
         stage('Terraform Plan') {
             steps {
                 bat 'terraform plan -out=tfplan'
