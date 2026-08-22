@@ -5,7 +5,12 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
-                bat 'terraform init -reconfigure -migrate-state=false'
+                bat '''
+                if exist terraform.tfstate del /f terraform.tfstate
+                if exist terraform.tfstate.backup del /f terraform.tfstate.backup
+                if exist .terraform rmdir /s /q .terraform
+                terraform init -reconfigure
+                '''
             }
         }
 
