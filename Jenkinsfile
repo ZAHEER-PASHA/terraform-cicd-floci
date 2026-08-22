@@ -5,7 +5,12 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
-                bat 'terraform init'
+                bat '''
+                if exist terraform.tfstate del /f terraform.tfstate
+                if exist terraform.tfstate.backup del /f terraform.tfstate.backup
+                if exist .terraform rmdir /s /q .terraform
+                terraform init -reconfigure
+                '''
             }
         }
 
@@ -20,11 +25,13 @@ pipeline {
                 bat 'terraform validate'
             }
         }
+
         stage('Terraform Plan') {
             steps {
                 bat 'terraform plan -out=tfplan'
             }
         }
+
         stage('Archive Terraform Plan') {
             steps {
                 archiveArtifacts artifacts: 'tfplan', fingerprint: true
