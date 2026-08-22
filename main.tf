@@ -60,6 +60,5 @@ resource "aws_s3_object" "website" {
   bucket       = aws_s3_bucket.cicd.id
   key          = "index.html"
   source       = "index.html"
-  source_hash  = filemd5("index.html")
   content_type = "text/html"
 }
